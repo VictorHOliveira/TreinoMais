@@ -1,0 +1,442 @@
+[
+  {
+    "id": "supino-reto",
+    "nome": "Supino Reto",
+    "musculo": "Peito",
+    "icone": "body",
+    "corGrupo": "#e91e63",
+    "descricao": "Deitado no banco, empurre a barra para cima até estender os braços.",
+    "equipamento": "Barra e Banco",
+    "gif": "videos/0025-EIeI8Vf.gif"
+  },
+  {
+    "id": "supino-inclinado",
+    "nome": "Supino Inclinado",
+    "musculo": "Peito",
+    "icone": "body",
+    "corGrupo": "#e91e63",
+    "descricao": "Deitado em banco inclinado, empurre a barra para cima.",
+    "equipamento": "Barra e Banco Inclinado",
+    "gif": "videos/0047-3TZduzM.gif"
+  },
+  {
+    "id": "crucifixo",
+    "nome": "Crucifixo",
+    "musculo": "Peito",
+    "icone": "body",
+    "corGrupo": "#e91e63",
+    "descricao": "Deitado no banco, abra os braços com halteres e traga para frente.",
+    "equipamento": "Halteres",
+    "gif": "videos/0308-yz9nUhF.gif"
+  },
+  {
+    "id": "supino-haltere",
+    "nome": "Supino com Halteres",
+    "musculo": "Peito",
+    "icone": "body",
+    "corGrupo": "#e91e63",
+    "descricao": "Deitado no banco, empurre os halteres para cima unindo-os no topo.",
+    "equipamento": "Halteres e Banco",
+    "gif": "videos/0289-SpYC0Kp.gif"
+  },
+  {
+    "id": "crossover",
+    "nome": "Crossover",
+    "musculo": "Peito",
+    "icone": "body",
+    "corGrupo": "#e91e63",
+    "descricao": "Em pé entre os cabos, traga as mãos à frente do peito cruzando.",
+    "equipamento": "Cabo",
+    "gif": "videos/0153-OQ1otBN.gif"
+  },
+  {
+    "id": "puxada-frontal",
+    "nome": "Puxada Frontal",
+    "musculo": "Costas",
+    "icone": "resize",
+    "corGrupo": "#2196f3",
+    "descricao": "Sentado, puxe a barra para baixo até o peito.",
+    "equipamento": "Máquina",
+    "gif": "videos/2330-LEprlgG.gif"
+  },
+  {
+    "id": "remada-curvada",
+    "nome": "Remada Curvada",
+    "musculo": "Costas",
+    "icone": "resize",
+    "corGrupo": "#2196f3",
+    "descricao": "Inclinado para frente, puxe a barra em direção ao abdômen.",
+    "equipamento": "Barra",
+    "gif": "videos/0027-eZyBC3j.gif"
+  },
+  {
+    "id": "remada-unilateral",
+    "nome": "Remada Unilateral",
+    "musculo": "Costas",
+    "icone": "resize",
+    "corGrupo": "#2196f3",
+    "descricao": "Apoiado no banco, puxe o halter com um braço em direção ao quadril.",
+    "equipamento": "Halter e Banco",
+    "gif": "videos/0292-C0MA9bC.gif"
+  },
+  {
+    "id": "pulldown-atras",
+    "nome": "Pulldown por Trás",
+    "musculo": "Costas",
+    "icone": "resize",
+    "corGrupo": "#2196f3",
+    "descricao": "Sentado, puxe a barra atrás da cabeça até a nuca.",
+    "equipamento": "Máquina",
+    "gif": "videos/1325-CmEr4pM.gif"
+  },
+  {
+    "id": "remada-cavalinho",
+    "nome": "Remada Cavalinho",
+    "musculo": "Costas",
+    "icone": "resize",
+    "corGrupo": "#2196f3",
+    "descricao": "Apoiado no peito na máquina, puxe os punhos em direção ao abdômen.",
+    "equipamento": "Máquina",
+    "gif": "videos/1350-7I6LNUG.gif"
+  },
+  {
+    "id": "agachamento",
+    "nome": "Agachamento",
+    "musculo": "Pernas",
+    "icone": "walk",
+    "corGrupo": "#4caf50",
+    "descricao": "Com a barra nos ombros, agache até as coxas ficarem paralelas ao chão.",
+    "equipamento": "Barra",
+    "gif": "videos/0102-oR7O9LW.gif"
+  },
+  {
+    "id": "leg-press",
+    "nome": "Leg Press",
+    "musculo": "Pernas",
+    "icone": "walk",
+    "corGrupo": "#4caf50",
+    "descricao": "Sentado na máquina, empurre a plataforma com os pés.",
+    "equipamento": "Máquina Leg Press",
+    "gif": "videos/2287-V07qpXy.gif"
+  },
+  {
+    "id": "cadeira-extensora",
+    "nome": "Cadeira Extensora",
+    "musculo": "Quadríceps",
+    "icone": "walk",
+    "corGrupo": "#4caf50",
+    "descricao": "Sentado, estenda os joelhos contra a resistência.",
+    "equipamento": "Máquina",
+    "gif": "videos/0585-my33uHU.gif"
+  },
+  {
+    "id": "mesa-flexora",
+    "nome": "Mesa Flexora",
+    "musculo": "Posterior",
+    "icone": "footsteps",
+    "corGrupo": "#8bc34a",
+    "descricao": "Deitado de bruços, flexione os joelhos contra a resistência.",
+    "equipamento": "Máquina",
+    "gif": "videos/0586-17lJ1kr.gif"
+  },
+  {
+    "id": "cadeira-flexora",
+    "nome": "Cadeira Flexora",
+    "musculo": "Posterior",
+    "icone": "footsteps",
+    "corGrupo": "#8bc34a",
+    "descricao": "Sentado, flexione os joelhos empurrando o apoio para trás.",
+    "equipamento": "Máquina",
+    "gif": "videos/0599-Zg3XY7P.gif"
+  },
+  {
+    "id": "stiff",
+    "nome": "Stiff",
+    "musculo": "Posterior",
+    "icone": "footsteps",
+    "corGrupo": "#8bc34a",
+    "descricao": "Em pé, segure a barra e incline o tronco para frente mantendo as pernas retas.",
+    "equipamento": "Barra",
+    "gif": "videos/0116-hrVQWvE.gif"
+  },
+  {
+    "id": "afundo",
+    "nome": "Afundo",
+    "musculo": "Pernas",
+    "icone": "walk",
+    "corGrupo": "#4caf50",
+    "descricao": "Dê um passo à frente e agache até o joelho traseiro quase tocar o chão.",
+    "equipamento": "Halteres ou Barra",
+    "gif": "videos/0336-RRWFUcw.gif"
+  },
+  {
+    "id": "passada",
+    "nome": "Passada",
+    "musculo": "Pernas",
+    "icone": "walk",
+    "corGrupo": "#4caf50",
+    "descricao": "Caminhando, faça afundos alternados com halteres nas mãos.",
+    "equipamento": "Halteres",
+    "gif": "videos/1460-IZVHb27.gif"
+  },
+  {
+    "id": "elevacao-panturrilha-sentado",
+    "nome": "Elevação Panturrilha Sentado",
+    "musculo": "Panturrilha",
+    "icone": "barbell",
+    "corGrupo": "#689f38",
+    "descricao": "Sentado, eleve os calcanhares empurrando a máquina para cima.",
+    "equipamento": "Máquina",
+    "gif": "videos/0088-ktsFQAZ.gif"
+  },
+  {
+    "id": "elevacao-panturrilha-em-pe",
+    "nome": "Elevação Panturrilha em Pé",
+    "musculo": "Panturrilha",
+    "icone": "barbell",
+    "corGrupo": "#689f38",
+    "descricao": "Em pé, eleve os calcanhares sustentando o peso nos ombros.",
+    "equipamento": "Máquina ou Barra",
+    "gif": "videos/1372-8ozhUIZ.gif"
+  },
+  {
+    "id": "desenvolvimento",
+    "nome": "Desenvolvimento",
+    "musculo": "Ombros",
+    "icone": "man",
+    "corGrupo": "#ff9800",
+    "descricao": "Sentado ou em pé, empurre os halteres acima da cabeça.",
+    "equipamento": "Halteres",
+    "gif": "videos/0997-peAeMR3.gif"
+  },
+  {
+    "id": "elevacao-lateral",
+    "nome": "Elevação Lateral",
+    "musculo": "Ombros",
+    "icone": "man",
+    "corGrupo": "#ff9800",
+    "descricao": "Em pé, eleve os halteres lateralmente até a altura dos ombros.",
+    "equipamento": "Halteres",
+    "gif": "videos/0334-DsgkuIt.gif"
+  },
+  {
+    "id": "elevacao-frontal",
+    "nome": "Elevação Frontal",
+    "musculo": "Ombros",
+    "icone": "man",
+    "corGrupo": "#ff9800",
+    "descricao": "Em pé, eleve os halteres à frente até a altura dos olhos.",
+    "equipamento": "Halteres",
+    "gif": "videos/0978-TFA88iB.gif"
+  },
+  {
+    "id": "remada-alta",
+    "nome": "Remada Alta",
+    "musculo": "Ombros",
+    "icone": "man",
+    "corGrupo": "#ff9800",
+    "descricao": "Em pé, puxe a barra ou corda até a altura do queixo com cotovelos altos.",
+    "equipamento": "Barra ou Cabo",
+    "gif": "videos/0120-UDlhcO8.gif"
+  },
+  {
+    "id": "rosca-biceps",
+    "nome": "Rosca Bíceps",
+    "musculo": "Bíceps",
+    "icone": "flash",
+    "corGrupo": "#f44336",
+    "descricao": "Em pé, flexione os cotovelos levantando os halteres.",
+    "equipamento": "Halteres",
+    "gif": "videos/0294-NbVPDMW.gif"
+  },
+  {
+    "id": "rosca-martelo",
+    "nome": "Rosca Martelo",
+    "musculo": "Bíceps",
+    "icone": "flash",
+    "corGrupo": "#f44336",
+    "descricao": "Em pé, flexione os cotovelos com pegada neutra (martelo).",
+    "equipamento": "Halteres",
+    "gif": "videos/0313-slDvUAU.gif"
+  },
+  {
+    "id": "rosca-scott",
+    "nome": "Rosca Scott",
+    "musculo": "Bíceps",
+    "icone": "flash",
+    "corGrupo": "#f44336",
+    "descricao": "Sentado no banco Scott, flexione os cotovelos com a barra.",
+    "equipamento": "Barra W e Banco Scott",
+    "gif": "videos/0070-qOgPVf6.gif"
+  },
+  {
+    "id": "triceps-pulley",
+    "nome": "Tríceps Pulley",
+    "musculo": "Tríceps",
+    "icone": "hand-left",
+    "corGrupo": "#e91e63",
+    "descricao": "Em pé, puxe a corda para baixo estendendo os cotovelos.",
+    "equipamento": "Máquina",
+    "gif": "videos/2406-ThKP69G.gif"
+  },
+  {
+    "id": "mergulho",
+    "nome": "Mergulho",
+    "musculo": "Tríceps",
+    "icone": "hand-left",
+    "corGrupo": "#e91e63",
+    "descricao": "Apoiado nas barras, desça flexionando os cotovelos e suba empurrando.",
+    "equipamento": "Barras Paralelas",
+    "gif": "videos/0009-PAgTVaK.gif"
+  },
+  {
+    "id": "testa-barra",
+    "nome": "Testa com Barra",
+    "musculo": "Tríceps",
+    "icone": "hand-left",
+    "corGrupo": "#e91e63",
+    "descricao": "Deitado, segure a barra reta e flexione os cotovelos levando à testa.",
+    "equipamento": "Barra Reta",
+    "gif": "videos/0060-h8LFzo9.gif"
+  },
+  {
+    "id": "abdominal-crunch",
+    "nome": "Abdominal Crunch",
+    "musculo": "Abdômen",
+    "icone": "fitness",
+    "corGrupo": "#9c27b0",
+    "descricao": "Deitado, contraia o abdômen elevando os ombros do chão.",
+    "equipamento": "Nenhum",
+    "gif": "videos/0274-TFqbd8t.gif"
+  },
+  {
+    "id": "elevacao-pernas",
+    "nome": "Elevação de Pernas",
+    "musculo": "Abdômen",
+    "icone": "fitness",
+    "corGrupo": "#9c27b0",
+    "descricao": "Deitado, eleve as pernas retas até 90° e desça controlado.",
+    "equipamento": "Nenhum",
+    "gif": "videos/0012-UGhRD1A.gif"
+  },
+  {
+    "id": "prancha",
+    "nome": "Prancha",
+    "musculo": "Core",
+    "icone": "shield",
+    "corGrupo": "#673ab7",
+    "descricao": "Mantenha o corpo reto apoiado nos antebraços e pontas dos pés.",
+    "equipamento": "Nenhum",
+    "gif": "videos/2135-VBAWRPG.gif"
+  },
+  {
+    "id": "prancha-lateral",
+    "nome": "Prancha Lateral",
+    "musculo": "Core",
+    "icone": "shield",
+    "corGrupo": "#673ab7",
+    "descricao": "Deitado de lado, apoiado em um antebraço, eleve o quadril.",
+    "equipamento": "Nenhum",
+    "gif": "videos/1775-VO2qeJg.gif"
+  },
+  {
+    "id": "russian-twist",
+    "nome": "Russian Twist",
+    "musculo": "Core",
+    "icone": "shield",
+    "corGrupo": "#673ab7",
+    "descricao": "Sentado com joelhos elevados, gire o tronco tocando o chão com as mãos.",
+    "equipamento": "Nenhum",
+    "gif": "videos/0687-XVDdcoj.gif"
+  },
+  {
+    "id": "mountain-climber",
+    "nome": "Mountain Climber",
+    "musculo": "Core",
+    "icone": "shield",
+    "corGrupo": "#673ab7",
+    "descricao": "Em posição de prancha, alterne trazendo os joelhos ao peito rapidamente.",
+    "equipamento": "Nenhum",
+    "gif": "videos/0630-RJgzwny.gif"
+  },
+  {
+    "id": "hip-thrust",
+    "nome": "Hip Thrust",
+    "musculo": "Glúteo",
+    "icone": "body",
+    "corGrupo": "#e040fb",
+    "descricao": "Deitado com costas no banco, eleve o quadril empurrando o peso.",
+    "equipamento": "Barra e Banco",
+    "gif": "videos/1409-qKBpF7I.gif"
+  },
+  {
+    "id": "abducao-quadril",
+    "nome": "Abdução de Quadril",
+    "musculo": "Glúteo",
+    "icone": "body",
+    "corGrupo": "#e040fb",
+    "descricao": "Sentado na máquina, abra as pernas contra a resistência.",
+    "equipamento": "Máquina",
+    "gif": "videos/0597-CHpahtl.gif"
+  },
+  {
+    "id": "burpee",
+    "nome": "Burpee",
+    "musculo": "Cardio",
+    "icone": "heart",
+    "corGrupo": "#ff5722",
+    "descricao": "Agache, apoie as mãos, salte para trás em prancha, flexione, salte para cima.",
+    "equipamento": "Nenhum",
+    "gif": "videos/1160-dK9394r.gif"
+  },
+  {
+    "id": "jumping-jack",
+    "nome": "Jumping Jack",
+    "musculo": "Cardio",
+    "icone": "heart",
+    "corGrupo": "#ff5722",
+    "descricao": "Salte abrindo pernas e braços simultaneamente, depois junte.",
+    "equipamento": "Nenhum",
+    "gif": "videos/3220-f9lVSSI.gif"
+  },
+  {
+    "id": "extensao-lombar",
+    "nome": "Extensão Lombar",
+    "musculo": "Lombar",
+    "icone": "fitness",
+    "corGrupo": "#795548",
+    "descricao": "Deitado de bruços, eleve o tronco mantendo o quadril apoiado.",
+    "equipamento": "Nenhum",
+    "gif": "videos/1314-qLpO4vV.gif"
+  },
+  {
+    "id": "hiperextensao",
+    "nome": "Hiperextensão",
+    "musculo": "Lombar",
+    "icone": "fitness",
+    "corGrupo": "#795548",
+    "descricao": "Apoiado no banco, eleve o tronco até ficar reto e desça controlado.",
+    "equipamento": "Banco Romano",
+    "gif": "videos/0489-zhMwOwE.gif"
+  },
+  {
+    "id": "flexao-punho",
+    "nome": "Flexão de Punho",
+    "musculo": "Antebraço",
+    "icone": "hand-right",
+    "corGrupo": "#607d8b",
+    "descricao": "Sentado, apoie os antebraços na coxa e flexione o punho com halter.",
+    "equipamento": "Halter",
+    "gif": "videos/0994-Ezpnw9d.gif"
+  },
+  {
+    "id": "rosca-invertida",
+    "nome": "Rosca Invertida",
+    "musculo": "Antebraço",
+    "icone": "hand-right",
+    "corGrupo": "#607d8b",
+    "descricao": "Em pé, segure a barra com pegada pronada e flexione os punhos.",
+    "equipamento": "Barra",
+    "gif": "videos/1654-nFc4FyV.gif"
+  }
+]

@@ -1,0 +1,393 @@
+import { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, Modal, TextInput } from 'react-native';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { useTreinos, useHistorico } from '../../../src/hooks/useTreinos';
+import { formatarDuracao } from '../../../src/utils/storage';
+import { verificarNovoRecorde } from '../../../src/services/firestoreService';
+import exerciciosData from '../../../src/data/exercicios.json';
+import TimerTreino from '../../../src/components/treino/TimerTreino';
+import ExercicioExecucaoCard from '../../../src/components/treino/ExercicioExecucaoCard';
+import DetalhesExercicioModal from '../../../src/components/DetalhesExercicioModal';
+
+const COR_FUNDO = '#1a1a2e';
+const COR_PRIMARIA = '#6C63FF';
+
+export default function ExecutarTreinoScreen() {
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const router = useRouter();
+  const { treinos } = useTreinos();
+  const { salvar: salvarHistorico } = useHistorico();
+
+  const [treino, setTreino] = useState(treinos.find(t => t.id === id) || null);
+  const [exerciciosExecucao, setExerciciosExecucao] = useState<any[]>([]);
+  const [tempo, setTempo] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const descansoRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [exEditandoDescanso, setExEditandoDescanso] = useState<number | null>(null);
+  const [valorDescanso, setValorDescanso] = useState('');
+  const [exercicioDetalheIndex, setExercicioDetalheIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const t = treinos.find(t => t.id === id);
+    if (t) setTreino(t);
+  }, [treinos, id]);
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      setTempo(prev => prev + 1);
+    }, 1000);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    descansoRef.current = setInterval(() => {
+      setExerciciosExecucao(prev => {
+        let mudou = false;
+        const novos = prev.map(ex => {
+          if (ex.descansoRestante > 0) {
+            mudou = true;
+            return { ...ex, descansoRestante: ex.descansoRestante - 1 };
+          }
+          return ex;
+        });
+        return mudou ? novos : prev;
+      });
+    }, 1000);
+    return () => {
+      if (descansoRef.current) clearInterval(descansoRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (treino && exerciciosExecucao.length === 0) {
+      const exec = treino.exercicios.map(ex => {
+        const exercicio = exerciciosData.find(e => e.id === ex.exercicioId);
+        return {
+          ...ex,
+          nome: exercicio?.nome || 'Exercício',
+          musculo: exercicio?.musculo || '',
+          icone: exercicio?.icone || 'fitness',
+          corGrupo: exercicio?.corGrupo || COR_PRIMARIA,
+          descansoRestante: 0,
+          series: ex.series.map(s => ({
+            ...s,
+            cargas: 0,
+            repeticoes: 12,
+            concluida: false,
+          })),
+        };
+      });
+      setExerciciosExecucao(exec);
+    }
+  }, [treino]);
+
+  const finalizarTreino = async () => {
+    if (!treino) return;
+
+    const novosRecordes: string[] = [];
+
+    for (const ex of exerciciosExecucao) {
+      const seriesCompletas = ex.series.filter((s: any) => s.concluida && s.cargas > 0);
+      if (seriesCompletas.length === 0) continue;
+
+      const cargaMax = Math.max(...seriesCompletas.map((s: any) => s.cargas));
+      const serieMax = seriesCompletas.find((s: any) => s.cargas === cargaMax);
+      const isNovoPR = await verificarNovoRecorde(ex.exercicioId, cargaMax, serieMax?.repeticoes || 0);
+      if (isNovoPR) {
+        novosRecordes.push(ex.nome);
+      }
+    }
+
+    Alert.alert(
+      'Finalizar Treino',
+      novosRecordes.length > 0
+        ? `🏆 Novo recorde em: ${novosRecordes.join(', ')}!\n\nDeseja salvar no histórico?`
+        : 'Deseja salvar este treino no histórico?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Salvar',
+          onPress: async () => {
+            await salvarHistorico({
+              treino,
+              dataExecucao: new Date().toISOString(),
+              duracao: tempo,
+              exercicios: exerciciosExecucao.map(ex => ({
+                exercicioId: ex.exercicioId,
+                series: ex.series.map((s: any) => ({
+                  cargas: s.cargas,
+                  repeticoes: s.repeticoes,
+                })),
+              })),
+            });
+            setTempo(0);
+            router.replace({
+              pathname: '/resumo-treino',
+              params: { treinoNome: treino.nome, duracao: String(tempo) },
+            });
+          },
+        },
+      ]
+    );
+  };
+
+  const atualizarSerie = (exIndex: number, serIndex: number, campo: 'cargas' | 'repeticoes', valor: number) => {
+    setExerciciosExecucao(prev => {
+      const novos = [...prev];
+      novos[exIndex] = {
+        ...novos[exIndex],
+        series: novos[exIndex].series.map((s: any, i: number) =>
+          i === serIndex ? { ...s, [campo]: Math.max(0, valor) } : s
+        ),
+      };
+      return novos;
+    });
+  };
+
+  const adicionarSerie = (exIndex: number) => {
+    setExerciciosExecucao(prev => {
+      const novos = [...prev];
+      const ex = novos[exIndex];
+      novos[exIndex] = {
+        ...ex,
+        series: [...ex.series, { cargas: 0, repeticoes: 12, concluida: false }],
+      };
+      return novos;
+    });
+  };
+
+  const removerSerie = (exIndex: number) => {
+    setExerciciosExecucao(prev => {
+      const novos = [...prev];
+      const ex = novos[exIndex];
+      if (ex.series.length <= 1) return prev;
+      novos[exIndex] = {
+        ...ex,
+        series: ex.series.slice(0, -1),
+      };
+      return novos;
+    });
+  };
+
+  const marcarConcluida = (exIndex: number, serIndex: number) => {
+    setExerciciosExecucao(prev => {
+      const novos = [...prev];
+      const ex = novos[exIndex];
+      const serie = ex.series[serIndex];
+      novos[exIndex] = {
+        ...ex,
+        descansoRestante: serie.concluida ? 0 : (ex.descanso || 60),
+        series: ex.series.map((s: any, i: number) =>
+          i === serIndex ? { ...s, concluida: !s.concluida } : s
+        ),
+      };
+      return novos;
+    });
+  };
+
+  const abrirEditarDescanso = (exIndex: number) => {
+    setExEditandoDescanso(exIndex);
+    setValorDescanso(String(exerciciosExecucao[exIndex].descanso || 60));
+  };
+
+  const salvarDescanso = () => {
+    const novoValor = parseInt(valorDescanso, 10);
+    if (exEditandoDescanso === null || isNaN(novoValor) || novoValor < 0) return;
+    setExerciciosExecucao(prev => {
+      const novos = [...prev];
+      novos[exEditandoDescanso] = {
+        ...novos[exEditandoDescanso],
+        descanso: novoValor,
+      };
+      return novos;
+    });
+    setExEditandoDescanso(null);
+  };
+
+  if (!treino) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.textoVazio}>Treino não encontrado</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <TimerTreino tempo={tempo} formatarDuracao={formatarDuracao} />
+
+      <FlatList
+        data={exerciciosExecucao}
+        keyExtractor={(_, i) => i.toString()}
+        contentContainerStyle={styles.lista}
+        renderItem={({ item, index }) => (
+          <ExercicioExecucaoCard
+            exercicio={item}
+            exIndex={index}
+            onAtualizarSerie={atualizarSerie}
+            onMarcarConcluida={marcarConcluida}
+            onAdicionarSerie={adicionarSerie}
+            onRemoverSerie={removerSerie}
+            onEditarDescanso={abrirEditarDescanso}
+            onDetalhe={() => setExercicioDetalheIndex(index)}
+            formatarDuracao={formatarDuracao}
+          />
+        )}
+      />
+
+      <TouchableOpacity style={styles.botaoFinalizar} onPress={finalizarTreino}>
+        <Ionicons name="stop-circle" size={24} color="#fff" />
+        <Text style={styles.botaoFinalizarTexto}>Finalizar Treino</Text>
+      </TouchableOpacity>
+
+      <DetalhesExercicioModal
+        exercicio={
+          exercicioDetalheIndex !== null && exerciciosExecucao[exercicioDetalheIndex]
+            ? (exerciciosData.find((e: any) => e.id === exerciciosExecucao[exercicioDetalheIndex].exercicioId) ?? null)
+            : null
+        }
+        visible={exercicioDetalheIndex !== null}
+        onClose={() => setExercicioDetalheIndex(null)}
+      />
+
+      <Modal visible={exEditandoDescanso !== null} transparent animationType="fade">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitulo}>Tempo de Descanso</Text>
+            <View style={styles.modalInputRow}>
+              <TextInput
+                style={styles.modalInput}
+                keyboardType="numeric"
+                value={valorDescanso}
+                onChangeText={setValorDescanso}
+                autoFocus
+              />
+              <Text style={styles.modalInputLabel}>segundos</Text>
+            </View>
+            <View style={styles.modalBotoes}>
+              <TouchableOpacity
+                style={styles.modalBotaoCancelar}
+                onPress={() => setExEditandoDescanso(null)}
+              >
+                <Text style={styles.modalBotaoCancelarTexto}>Cancelar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.modalBotaoSalvar} onPress={salvarDescanso}>
+                <Text style={styles.modalBotaoSalvarTexto}>Salvar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COR_FUNDO,
+    padding: 20,
+  },
+  textoVazio: {
+    color: '#888',
+    textAlign: 'center',
+    marginTop: 40,
+  },
+  lista: {
+    gap: 16,
+    paddingBottom: 100,
+  },
+  botaoFinalizar: {
+    position: 'absolute',
+    bottom: 30,
+    left: 20,
+    right: 20,
+    backgroundColor: '#ff6b6b',
+    borderRadius: 16,
+    padding: 18,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+  },
+  botaoFinalizarTexto: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#16213e',
+    borderRadius: 16,
+    padding: 24,
+    width: '80%',
+    borderWidth: 1,
+    borderColor: '#333',
+  },
+  modalTitulo: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  modalInputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    marginBottom: 24,
+  },
+  modalInput: {
+    backgroundColor: '#1a1a2e',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#6C63FF',
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    width: 100,
+    paddingVertical: 10,
+  },
+  modalInputLabel: {
+    color: '#888',
+    fontSize: 14,
+  },
+  modalBotoes: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  modalBotaoCancelar: {
+    flex: 1,
+    paddingVertical: 14,
+    borderRadius: 12,
+    backgroundColor: '#333',
+    alignItems: 'center',
+  },
+  modalBotaoCancelarTexto: {
+    color: '#aaa',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  modalBotaoSalvar: {
+    flex: 1,
+    paddingVertical: 14,
+    borderRadius: 12,
+    backgroundColor: '#6C63FF',
+    alignItems: 'center',
+  },
+  modalBotaoSalvarTexto: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+});
